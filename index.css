@@ -1,1 +1,5 @@
-
+#mycanvas {
+  background-image: url("assets/canvas.png");
+  margin: 40px 400px;
+  border: 20px solid darkgreen;
+}

@@ -2,37 +2,34 @@ function init() {
   canvas = document.getElementById("mycanvas");
   W = canvas.width = 500;
   H = canvas.height = 500;
+  cs = 30;
 
   pen = canvas.getContext("2d");
-  //this pen acts as a pen on the canvas
 
-  //to make the rectangle
+  // //snake object
+  snake = {
+    init_len: 5,
+    color: "red",
+    cells: [],
+    direction: "right",
 
-  //now creating a object rect
-  rect = {
-    x: 20,
-    y: 20,
-    h: 30,
-    w: 30,
-    speed: 10,
+    createsnake: function () {
+      for (var i = this.init_len; i > 0; i--) {
+        this.cells.push({ x: i, y: 0 });
+      }
+    },
+    drawsnake: function () {
+      for (var i = 0; i < this.cells.length; i++) {
+        pen.fillRect(this.cells[i].x * cs, this.cells[i].y, cs - 2, cs - 2);
+      }
+    },
   };
-}
-function draw() {
-  pen.clearRect(0, 0, W, H); //clears the rectangle
-  //console.log("in draw");
-  pen.fillStyle = "red";
-  pen.fillRect(rect.x, rect.y, rect.w, rect.h);
-}
-function update() {
-  rect.x += rect.speed;
-  if (rect.x > W - rect.w || rect.x < 0) {
-    rect.speed *= -1;
-  }
-}
-function gameloop() {
-  draw();
-  update();
+  snake.createsnake();
 }
 init();
-
-setInterval(gameloop, 100);
+function draw() {
+  snake.drawsnake();
+}
+draw();
+// function update() { }
+// function gameloop() { }

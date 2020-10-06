@@ -1,11 +1,20 @@
 function init() {
   canvas = document.getElementById("mycanvas");
-  W = canvas.width = 1000;
+  W = canvas.width = 500;
   H = canvas.height = 500;
   cs = 30;
   food = getfood();
+  //Game score
+  score = 0;
 
   pen = canvas.getContext("2d");
+
+  //creating a food image
+  food_img = new Image();
+  food_img.src = "assets/apple.png";
+  //creating trophy image
+  trophy = new Image();
+  trophy.src = "assets/trophy.png";
 
   // //snake object
   snake = {
@@ -21,7 +30,11 @@ function init() {
     },
     drawsnake: function () {
       //we will generate random food
-      pen.fillRect(food.x * cs, food.y * cs, cs, cs);
+      pen.drawImage(food_img, food.x * cs, food.y * cs, cs, cs);
+      //pen.drawImage(trophy, 50, 50, 40, 40);
+      pen.font = "25px Roboto";
+      pen.fillText("Score:", 30, 30);
+      pen.fillText(score, 100, 31);
 
       for (var i = 0; i < this.cells.length; i++) {
         pen.fillRect(
@@ -58,23 +71,26 @@ function init() {
         console.log("Food eaten");
         food = getfood();
         this.cells.push({ x: nextX, y: nextY });
+        score++;
       }
 
       //GAME OVER CONDITION
-      if (nextX * cs > W - cs) {
+      if (nextX * cs > W) {
         console.log("Game Over");
         clearInterval(timer);
         alert("Game over");
-      } else if (nextX * cs - cs < 0) {
+      } else if (nextX * cs < 0) {
         console.log("Game Over");
         clearInterval(timer);
         alert("Game over");
-      } else if (nextY * cs > H - cs) {
+      } else if (nextY * cs > H) {
+        alert("GAme over");
         console.log("Game Over");
         clearInterval(timer);
         alert("Game over");
-      } else if (nextY * cs - cs < 0) {
+      } else if (nextY * cs < 0) {
         console.log("Game Over");
+        alert("game over");
         clearInterval(timer);
       }
 
